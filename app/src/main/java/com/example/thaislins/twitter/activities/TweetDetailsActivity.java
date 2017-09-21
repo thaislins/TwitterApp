@@ -33,7 +33,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
     private void run() {
 
         Intent intent = getIntent();
-        tweet = intent.getParcelableExtra(TWEET_INFO);
+        tweet = (Tweet) intent.getSerializableExtra(TWEET_INFO);
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy - hh:mm", Locale.getDefault());
 
         TextView textUsername = (TextView) findViewById(R.id.usernameDt);

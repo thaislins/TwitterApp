@@ -10,7 +10,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/logout"
-        android:icon="@android:drawable/ic_menu_set_as"
+        android:icon="@drawable/ic_power_settings_new_black_24dp"
         android:title="Item"
         app:showAsAction="always" />
 </menu>

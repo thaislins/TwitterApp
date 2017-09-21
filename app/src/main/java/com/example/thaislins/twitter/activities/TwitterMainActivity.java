@@ -109,15 +109,9 @@ public class TwitterMainActivity extends AppCompatActivity {
                                     int position, long id) {
                 Tweet selectedTweet = listOfTweets.get(position);
 
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Selected Item: " + selectedTweet.getTweet(),
-                        Toast.LENGTH_LONG);
-                toast.show();
-
-
-                /*Intent intent = new Intent(TwitterMainActivity.this, TweetDetailsActivity.class);
-                intent.putExtra(TweetDetailsActivity.TWEET_INFO, (Tweet) listTwitter.getItemAtPosition(position));
-                startActivity(intent);*/
+                Intent intent = new Intent(TwitterMainActivity.this, TweetDetailsActivity.class);
+                intent.putExtra(TweetDetailsActivity.TWEET_INFO, selectedTweet);
+                startActivity(intent);
             }
         });
     }
@@ -127,7 +121,6 @@ public class TwitterMainActivity extends AppCompatActivity {
         String tweet = txtTwitter.getText().toString();
         Tweet tweetInfo = new Tweet("@username", tweet);
         listOfTweets.add(tweetInfo);
-        Collections.reverse(listOfTweets);
         txtTwitter.setText("");
 
         listAdapter.notifyDataSetChanged();
