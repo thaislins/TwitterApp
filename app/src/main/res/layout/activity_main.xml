@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp"
+    tools:context="com.example.thaislins.twitter.activities.TwitterMainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="0dp">
+
+        <ImageView
+            android:id="@+id/twitterPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="takePhoto"
+            app:srcCompat="@mipmap/ic_launcher_round" />
+
+        <EditText
+            android:id="@+id/txtTweet"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="What's happening?"
+            android:inputType="textMultiLine" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="0dp">
+
+        <Button
+            android:id="@+id/btnTweet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="tweet"
+            android:text="Tweet" />
+
+        <Button
+            android:id="@+id/btnDirect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Direct" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listTweet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/my_selector" />
+
+
+</LinearLayout>
