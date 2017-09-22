@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <drawable name="grey_color">#BDBBB9</drawable>
-    <drawable name="black_color">#606060</drawable>
+    <drawable name="black_color">#464343</drawable>
     <drawable name="red_color">#d11717</drawable>
+    <drawable name="blue_color">#3F51B5</drawable>
 </resources>

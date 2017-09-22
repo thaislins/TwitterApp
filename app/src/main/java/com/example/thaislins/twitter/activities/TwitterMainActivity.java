@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.thaislins.twitter.R;
 import com.example.thaislins.twitter.Tweet;
 import com.example.thaislins.twitter.TweetAdapter;
+import com.example.thaislins.twitter.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,7 +33,6 @@ public class TwitterMainActivity extends AppCompatActivity {
     protected static final int PHOTO = 1;
     private static final String IMAGE ="image" ;
     private ImageView imgView;
-
     private Bitmap bitmap;
 
     @Override
@@ -50,17 +50,13 @@ public class TwitterMainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if(id == R.id.reload) {
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Reloading...",
-                    Toast.LENGTH_LONG);
-            toast.show();
+        if(item.getItemId() == R.id.reload) {
+            Toast.makeText(this, "Reloading...", Toast.LENGTH_SHORT).show();
+            return true;
         }
-        if(id == R.id.logout) {
-            System.exit(0);
+        else if(item.getItemId() == R.id.logout) {
+            finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -69,7 +65,7 @@ public class TwitterMainActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, v.getId(), 0, "Edit");//groupId, itemId, order, title
+        menu.add(0, v.getId(), 0, "Edit");
         menu.add(0, v.getId(), 0, "Remove");
     }
 
@@ -119,7 +115,9 @@ public class TwitterMainActivity extends AppCompatActivity {
     public void tweet(View v) {
         EditText txtTwitter = (EditText) findViewById(R.id.txtTweet);
         String tweet = txtTwitter.getText().toString();
-        Tweet tweetInfo = new Tweet("@username", tweet);
+
+        User user = new User("User", "user@email.com", "+1 555 555 5555");
+        Tweet tweetInfo = new Tweet(user,"@username", tweet);
         listOfTweets.add(tweetInfo);
         txtTwitter.setText("");
 
@@ -141,7 +139,6 @@ public class TwitterMainActivity extends AppCompatActivity {
 
     private void modifyPhoto(Intent data) {
         imgView = (ImageView) findViewById(R.id.twitterPicture);
-
         bitmap = (Bitmap) data.getExtras().get("data");
         imgView.setImageBitmap(bitmap);
     }

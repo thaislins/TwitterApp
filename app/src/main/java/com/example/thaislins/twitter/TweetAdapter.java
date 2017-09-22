@@ -54,7 +54,7 @@ public class TweetAdapter extends BaseAdapter {
         View view = inflater.inflate(R.layout.tweet_layout, null);
 
         TextView txtTweet = (TextView) view.findViewById(R.id.text);
-        TextView txtUsername = (TextView) view.findViewById(R.id.username);
+        TextView txtUsername = (TextView) view.findViewById(R.id.user);
         TextView txtDate = (TextView) view.findViewById(R.id.date);
 
         txtTweet.setText(tweet.getTweet());

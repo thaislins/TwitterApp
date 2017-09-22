@@ -9,14 +9,25 @@ import java.util.Date;
 
 public class Tweet implements Serializable {
 
+    private User user;
     private String username;
     private String tweet;
     private Date date;
 
-    public Tweet(String username, String tweet) {
+    public Tweet(User user, String username, String tweet) {
+        super();
+        this.user = user;
         this.username = username;
         this.tweet = tweet;
         date = new Date();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getUsername() {
@@ -26,7 +37,6 @@ public class Tweet implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
-
 
     public String getTweet() {
         return tweet;
@@ -45,6 +55,6 @@ public class Tweet implements Serializable {
     }
 
     public String toString() {
-        return username + "\n" + tweet + "\n" + date.toString();
+        return user + "\n" + tweet + "\n" + date.toString();
     }
 }
