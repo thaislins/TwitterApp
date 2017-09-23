@@ -4,22 +4,32 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="411dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_weight="0.00"
-        android:onClick="call"
-        android:text="username"
-        android:textColor="@drawable/blue_color"
-        android:textSize="20dp" />
-
-    <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
-        android:text="tweet"
+        android:onClick="call"
+        android:text="username"
         android:textSize="14dp" />
+
+    <EditText
+        android:id="@+id/editTweet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="saveTweet"
+            android:text="Save" />
+
+    </LinearLayout>
 </LinearLayout>

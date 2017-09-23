@@ -18,5 +18,7 @@
         </activity>
         <activity android:name=".activities.TweetDetailsActivity">
         </activity>
+        <activity android:name=".activities.EditTweetActivity">
+        </activity>
     </application>
 </manifest>

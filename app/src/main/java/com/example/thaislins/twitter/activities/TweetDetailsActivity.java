@@ -24,7 +24,7 @@ import java.util.Locale;
 
 public class TweetDetailsActivity extends AppCompatActivity {
 
-    public static final String TWEET_INFO = "TWEET_INFO";
+    public static final String TWEET_INFO = "tweet_info";
     private Tweet tweet;
     private TextView textUsername;
 
@@ -32,10 +32,10 @@ public class TweetDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tweet_details);
-        run();
+        run(savedInstanceState);
     }
 
-    private void run() {
+    public void run(Bundle savedInstanceState) {
         Intent intent = getIntent();
         tweet = (Tweet) intent.getSerializableExtra(TWEET_INFO);
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy - hh:mm", Locale.getDefault());
@@ -61,7 +61,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void call(View v) {
+    public void makeCall(View v) {
         User user = tweet.getUser();
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + user.getPhone()));

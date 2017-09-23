@@ -27,11 +27,12 @@ import java.util.Collections;
 
 public class TwitterMainActivity extends AppCompatActivity {
 
+    protected static final int EDIT = 1;
+    protected static final int PHOTO = 2;
+    private static final String IMAGE = "image";
     private ArrayList<Tweet> listOfTweets;
     private TweetAdapter listAdapter;
     private ListView listTwitter;
-    protected static final int PHOTO = 1;
-    private static final String IMAGE ="image" ;
     private ImageView imgView;
     private Bitmap bitmap;
 
@@ -50,11 +51,10 @@ public class TwitterMainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.reload) {
+        if (item.getItemId() == R.id.reload) {
             Toast.makeText(this, "Reloading...", Toast.LENGTH_SHORT).show();
             return true;
-        }
-        else if(item.getItemId() == R.id.logout) {
+        } else if (item.getItemId() == R.id.logout) {
             finish();
             return true;
         }
@@ -73,28 +73,34 @@ public class TwitterMainActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info;
         info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int listPosition = info.position;
 
-        if(item.getTitle() == "Remove") {
-            int listPosition = info.position;
+        if (item.getTitle() == "Edit") {
+            Tweet selectedTweet = listOfTweets.get(listPosition);
+            Intent intent = new Intent(TwitterMainActivity.this, EditTweetActivity.class);
+            intent.putExtra(EditTweetActivity.EDIT_TWEET, selectedTweet);
+            intent.putExtra(EditTweetActivity.TWEET_ID, info.position);
+            startActivityForResult(intent, EDIT);
+        } else if (item.getTitle() == "Remove") {
             listOfTweets.remove(listOfTweets.get(listPosition));//list item title
             listAdapter.notifyDataSetChanged();
         }
         return super.onContextItemSelected(item);
     }
 
-    private void run(Bundle savedInstanceState) {
+    public void run(Bundle savedInstanceState) {
         listTwitter = (ListView) findViewById(R.id.listTweet);
         listOfTweets = new ArrayList<Tweet>();
         listAdapter = new TweetAdapter(this, listOfTweets);
         listTwitter.setAdapter(listAdapter);
         registerForContextMenu(listTwitter);
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
 
             bitmap = savedInstanceState.getParcelable(IMAGE);
 
-            if(bitmap != null){
-                imgView = (ImageView) findViewById(R.id.twitterPicture);
+            if (bitmap != null) {
+                imgView = (ImageView) findViewById(R.id.imgTwitter);
 
                 imgView.setImageBitmap(bitmap);
             }
@@ -117,7 +123,7 @@ public class TwitterMainActivity extends AppCompatActivity {
         String tweet = txtTwitter.getText().toString();
 
         User user = new User("User", "user@email.com", "+1 555 555 5555");
-        Tweet tweetInfo = new Tweet(user,"@username", tweet);
+        Tweet tweetInfo = new Tweet(user, "@username", tweet);
         listOfTweets.add(tweetInfo);
         txtTwitter.setText("");
 
@@ -127,6 +133,11 @@ public class TwitterMainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
+            case EDIT:
+                if (resultCode == RESULT_OK) {
+                    modifyTweet(data);
+                }
+                break;
             case PHOTO:
                 if (resultCode == RESULT_OK) {
                     modifyPhoto(data);
@@ -137,8 +148,16 @@ public class TwitterMainActivity extends AppCompatActivity {
         }
     }
 
+    private void modifyTweet(Intent data) {
+        Tweet tweet = (Tweet) data.getSerializableExtra(EditTweetActivity.EDIT_TWEET);
+        int tweetId = data.getIntExtra(EditTweetActivity.TWEET_ID, 0);
+
+        listOfTweets.set(tweetId, tweet);
+        listAdapter.notifyDataSetChanged();
+    }
+
     private void modifyPhoto(Intent data) {
-        imgView = (ImageView) findViewById(R.id.twitterPicture);
+        imgView = (ImageView) findViewById(R.id.imgTwitter);
         bitmap = (Bitmap) data.getExtras().get("data");
         imgView.setImageBitmap(bitmap);
     }
@@ -150,7 +169,7 @@ public class TwitterMainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(IMAGE,bitmap);
+        outState.putParcelable(IMAGE, bitmap);
         super.onSaveInstanceState(outState);
     }
 }
