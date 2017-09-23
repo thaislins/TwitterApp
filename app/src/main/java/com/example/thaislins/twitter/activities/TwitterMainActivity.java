@@ -2,7 +2,6 @@ package com.example.thaislins.twitter.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,9 +20,7 @@ import com.example.thaislins.twitter.Tweet;
 import com.example.thaislins.twitter.TweetAdapter;
 import com.example.thaislins.twitter.User;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class TwitterMainActivity extends AppCompatActivity {
 
@@ -96,7 +93,6 @@ public class TwitterMainActivity extends AppCompatActivity {
         registerForContextMenu(listTwitter);
 
         if (savedInstanceState != null) {
-
             bitmap = savedInstanceState.getParcelable(IMAGE);
 
             if (bitmap != null) {
@@ -128,6 +124,10 @@ public class TwitterMainActivity extends AppCompatActivity {
         txtTwitter.setText("");
 
         listAdapter.notifyDataSetChanged();
+    }
+
+    public void sendDirect(View v) {
+        startActivity(new Intent(this,DirectMessageActivity.class));
     }
 
     @Override
@@ -172,4 +172,5 @@ public class TwitterMainActivity extends AppCompatActivity {
         outState.putParcelable(IMAGE, bitmap);
         super.onSaveInstanceState(outState);
     }
+
 }
