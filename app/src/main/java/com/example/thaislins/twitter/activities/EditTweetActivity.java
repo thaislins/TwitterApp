@@ -2,8 +2,6 @@ package com.example.thaislins.twitter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.thaislins.twitter.R;
-import com.example.thaislins.twitter.Tweet;
+import com.example.thaislins.twitter.model.Tweet;
 
 import java.util.Date;
 
@@ -42,7 +40,7 @@ public class EditTweetActivity extends AppCompatActivity {
         TextView textUsername = (TextView) findViewById(R.id.txtUsername);
         editText = (EditText) findViewById(R.id.editTweet);
 
-        textUsername.setText(tweet.getUsername());
+        textUsername.setText(tweet.getUser().getUsername());
         editText.setText(tweet.getTweet());
 
         //adds back arrow to layout

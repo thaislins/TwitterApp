@@ -1,13 +1,16 @@
-package com.example.thaislins.twitter;
+package com.example.thaislins.twitter.adapter;
 
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.thaislins.twitter.R;
+import com.example.thaislins.twitter.model.DirectMessage;
+import com.example.thaislins.twitter.model.Tweet;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,27 +18,27 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Created by thaislins on 20/09/17.
+ * Created by thaislins on 24/09/17.
  */
 
-public class TweetAdapter extends BaseAdapter {
+public class DirectMessageAdapter extends BaseAdapter {
 
     private final Context context;
-    ArrayList<Tweet> tweets = new ArrayList<Tweet>();
+    ArrayList<DirectMessage> directMessages = new ArrayList<DirectMessage>();
 
-    public TweetAdapter(Context context, ArrayList<Tweet> tweets) {
+    public DirectMessageAdapter(Context context, ArrayList<DirectMessage> directMessages) {
         this.context = context;
-        this.tweets = tweets;
+        this.directMessages = directMessages;
     }
 
     @Override
     public int getCount() {
-        return tweets.size();
+        return directMessages.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return tweets.get(position);
+        return directMessages.get(position);
     }
 
     @Override
@@ -46,7 +49,7 @@ public class TweetAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Tweet tweet = tweets.get(position);
+        DirectMessage directMessage = directMessages.get(position);
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy - hh:mm", Locale.getDefault());
 
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
@@ -57,9 +60,9 @@ public class TweetAdapter extends BaseAdapter {
         TextView txtUsername = (TextView) view.findViewById(R.id.user);
         TextView txtDate = (TextView) view.findViewById(R.id.date);
 
-        txtTweet.setText(tweet.getTweet());
-        txtUsername.setText(tweet.getUsername());
-        txtDate.setText(df.format(tweet.getDate()));
+        txtTweet.setText(directMessage.getMessage());
+        txtUsername.setText(directMessage.getUser().getUsername());
+        txtDate.setText(df.format(directMessage.getDate()));
 
         return view;
     }

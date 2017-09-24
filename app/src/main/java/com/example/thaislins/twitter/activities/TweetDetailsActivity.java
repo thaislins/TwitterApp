@@ -1,8 +1,6 @@
 package com.example.thaislins.twitter.activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.thaislins.twitter.R;
-import com.example.thaislins.twitter.Tweet;
-import com.example.thaislins.twitter.User;
+import com.example.thaislins.twitter.model.Tweet;
+import com.example.thaislins.twitter.model.User;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -44,7 +42,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
         TextView textTweet = (TextView) findViewById(R.id.textDt);
         TextView textDate = (TextView) findViewById(R.id.dateDt);
 
-        textUsername.setText(tweet.getUsername());
+        textUsername.setText(tweet.getUser().getUsername());
         textTweet.setText(tweet.getTweet());
         textDate.setText(df.format(tweet.getDate()));
 

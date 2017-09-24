@@ -1,4 +1,4 @@
-package com.example.thaislins.twitter;
+package com.example.thaislins.twitter.model;
 
 import java.io.Serializable;
 
@@ -8,15 +8,21 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
+    private String username;
     private String name;
     private String email;
     private String phone;
 
-    public User(String name, String email, String phone) {
+    public User(String username, String name, String email, String phone) {
+        this.username = username;
         this.name = name;
         this.email = email;
         this.phone = phone;
     }
+
+    public String getUsername() { return username; }
+
+    public void setUsername() { this.username = name; }
 
     public String getName() {
         return name;

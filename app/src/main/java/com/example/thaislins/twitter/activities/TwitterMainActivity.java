@@ -16,9 +16,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.thaislins.twitter.R;
-import com.example.thaislins.twitter.Tweet;
-import com.example.thaislins.twitter.TweetAdapter;
-import com.example.thaislins.twitter.User;
+import com.example.thaislins.twitter.model.Tweet;
+import com.example.thaislins.twitter.adapter.TweetAdapter;
+import com.example.thaislins.twitter.model.User;
 
 import java.util.ArrayList;
 
@@ -118,8 +118,8 @@ public class TwitterMainActivity extends AppCompatActivity {
         EditText txtTwitter = (EditText) findViewById(R.id.txtTweet);
         String tweet = txtTwitter.getText().toString();
 
-        User user = new User("User", "user@email.com", "+1 555 555 5555");
-        Tweet tweetInfo = new Tweet(user, "@username", tweet);
+        User user = new User("@username", "User", "user@email.com", "+1 555 555 5555");
+        Tweet tweetInfo = new Tweet(user, tweet);
         listOfTweets.add(tweetInfo);
         txtTwitter.setText("");
 

@@ -1,4 +1,4 @@
-package com.example.thaislins.twitter;
+package com.example.thaislins.twitter.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,14 +10,12 @@ import java.util.Date;
 public class Tweet implements Serializable {
 
     private User user;
-    private String username;
     private String tweet;
     private Date date;
 
-    public Tweet(User user, String username, String tweet) {
+    public Tweet(User user, String tweet) {
         super();
         this.user = user;
-        this.username = username;
         this.tweet = tweet;
         date = new Date();
     }
@@ -28,14 +26,6 @@ public class Tweet implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getTweet() {
