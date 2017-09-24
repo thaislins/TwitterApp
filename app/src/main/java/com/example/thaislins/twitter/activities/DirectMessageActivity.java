@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.thaislins.twitter.R;
 import com.example.thaislins.twitter.adapter.DirectMessageAdapter;
 import com.example.thaislins.twitter.model.DirectMessage;
+import com.example.thaislins.twitter.model.SocketClient;
 import com.example.thaislins.twitter.model.User;
 
 import java.io.BufferedReader;
@@ -21,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +41,54 @@ public class DirectMessageActivity extends AppCompatActivity {
     private TextView textServer;
     private EditText textInput;
     private ListView textOutput;
+
+    public DirectMessageAdapter getDirectMessageAdapter() {
+        return directMessageAdapter;
+    }
+
+    public void setDirectMessageAdapter(DirectMessageAdapter directMessageAdapter) {
+        this.directMessageAdapter = directMessageAdapter;
+    }
+
+    public ArrayList<DirectMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<DirectMessage> messages) {
+        this.messages = messages;
+    }
+
+    public TextView getTextDevice() {
+        return textDevice;
+    }
+
+    public void setTextDevice(TextView textDevice) {
+        this.textDevice = textDevice;
+    }
+
+    public TextView getTextServer() {
+        return textServer;
+    }
+
+    public void setTextServer(TextView textServer) {
+        this.textServer = textServer;
+    }
+
+    public EditText getTextInput() {
+        return textInput;
+    }
+
+    public void setTextInput(EditText textInput) {
+        this.textInput = textInput;
+    }
+
+    public ListView getTextOutput() {
+        return textOutput;
+    }
+
+    public void setTextOutput(ListView textOutput) {
+        this.textOutput = textOutput;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,52 +116,10 @@ public class DirectMessageActivity extends AppCompatActivity {
     }
 
     public void send(View v) {
-        SocketClient client = new SocketClient();
+        SocketClient client = new SocketClient(this);
         client.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, textServer.getText().toString(), "4444", textInput.getText().toString());
     }
 
-    private class SocketClient extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... strings) {
-            Socket socket = null;
-            StringBuilder data = new StringBuilder();
-
-            try {
-                socket = new Socket(strings[0], Integer.parseInt(strings[1]));
-                PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
-                pw.println(strings[2]);
-                BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                String rawData;
-                while ((rawData = br.readLine()) != null) {
-                    data.append(rawData);
-                }
-
-                br.close();
-            } catch (Exception e) {
-                Log.e("AsyncTask", "doInBackground: error on socket...", e);
-            } finally {
-                if (socket != null) {
-                    try {
-                        socket.close();
-                    } catch (IOException e) {
-                        Log.e("AsyncTask", "doInBackground: Error closing socket", e);
-                    }
-                }
-            }
-            return data.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            User recipient = new User("@username", "User", "user@email.com", "+1 555 555 5555");
-            DirectMessage message = new DirectMessage(new Date(), recipient, textInput.getText().toString());
-
-            messages.add(message);
-            directMessageAdapter.notifyDataSetChanged();
-            textInput.setText("");
-        }
-    }
+/*
+    }*/
 }
