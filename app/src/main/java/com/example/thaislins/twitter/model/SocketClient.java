@@ -54,7 +54,7 @@ public class SocketClient extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        User recipient = new User("@recipient", "User", "user@email.com", "+1 555 555 5555");
+        User recipient = new User(((DirectMessageActivity) context).getTextName().getText().toString(), "User", "user@email.com", "+1 555 555 5555");
         DirectMessage directMessage = new DirectMessage(new Date(), recipient, ((DirectMessageActivity) context).getTextInput().getText().toString());
 
         ((DirectMessageActivity) context).getMessages().add(directMessage);

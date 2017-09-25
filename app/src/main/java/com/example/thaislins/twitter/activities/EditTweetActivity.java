@@ -21,6 +21,7 @@ public class EditTweetActivity extends AppCompatActivity {
 
     public static final String EDIT_TWEET = "edit_tweet";
     public static final String TWEET_ID = "tweet_id";
+
     private Tweet tweet;
     private int tweetId;
     private EditText editText;

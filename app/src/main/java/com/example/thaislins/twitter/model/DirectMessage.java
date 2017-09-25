@@ -9,9 +9,9 @@ import java.util.Date;
 
 public class DirectMessage implements Serializable {
 
-    private String message;
     private Date date;
     private User user;
+    private String message;
 
     public DirectMessage(Date date, User user, String message) {
         this.date = date;

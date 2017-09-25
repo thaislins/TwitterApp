@@ -27,6 +27,7 @@ public class TwitterMainActivity extends AppCompatActivity {
     protected static final int EDIT = 1;
     protected static final int PHOTO = 2;
     private static final String IMAGE = "image";
+
     private ArrayList<Tweet> listOfTweets;
     private TweetAdapter listAdapter;
     private ListView listTwitter;
