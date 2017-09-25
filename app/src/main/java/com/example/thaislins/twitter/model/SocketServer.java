@@ -41,10 +41,6 @@ public class SocketServer extends AsyncTask<Void, String, Void> {
         String name;
 
         try {
-            serverSocket = new ServerSocket();
-            serverSocket.setReuseAddress(true);
-            serverSocket.bind(new InetSocketAddress(Integer.parseInt("4444")));
-
             while (listening) {
                 Socket socket = serverSocket.accept();
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -80,6 +76,5 @@ public class SocketServer extends AsyncTask<Void, String, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Toast.makeText(((DirectMessageActivity) context), "Server Stopped!", Toast.LENGTH_SHORT).show();
     }
 }

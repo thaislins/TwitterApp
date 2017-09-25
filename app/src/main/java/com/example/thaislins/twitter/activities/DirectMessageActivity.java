@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.thaislins.twitter.R;
 import com.example.thaislins.twitter.adapter.DirectMessageAdapter;
@@ -25,6 +26,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -123,6 +125,7 @@ public class DirectMessageActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         try {
+            Toast.makeText(DirectMessageActivity.this, "Server Stopped!", Toast.LENGTH_SHORT).show();
             serverSocket.close();
             Log.d(DirectMessageActivity.class.getName(), "onDestroy: Server Socket closed");
         } catch (IOException e) {
@@ -137,6 +140,14 @@ public class DirectMessageActivity extends AppCompatActivity {
         textName = (EditText) findViewById(R.id.txtName);
         textInput = (EditText) findViewById(R.id.txtInput);
         textOutput = (ListView) findViewById(R.id.txtOutput);
+
+        try {
+            serverSocket = new ServerSocket();
+            serverSocket.setReuseAddress(true);
+            serverSocket.bind(new InetSocketAddress(Integer.parseInt("4444")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         messages = new ArrayList<DirectMessage>();
         socketServer = new SocketServer(this, serverSocket);
