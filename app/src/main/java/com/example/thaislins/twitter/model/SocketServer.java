@@ -67,7 +67,7 @@ public class SocketServer extends AsyncTask<Void, String, Void> {
     @Override
     protected void onProgressUpdate(String... data) {
         super.onProgressUpdate(data);
-        User receiver = new User("@u", "User", "user@email.com", "+1 555 555 5555");
+        User receiver = new User("@username", "User", "user@email.com", "+1 555 555 5555");
         DirectMessage directMessage = new DirectMessage(new Date(), receiver, data[0]);
         ((DirectMessageActivity) context).getMessages().add(directMessage);
         ((DirectMessageActivity) context).getDirectMessageAdapter().notifyDataSetChanged();

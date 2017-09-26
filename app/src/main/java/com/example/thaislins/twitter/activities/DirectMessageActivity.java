@@ -3,6 +3,9 @@ package com.example.thaislins.twitter.activities;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Message;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -31,6 +34,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by thaislins on 23/09/17.
@@ -38,13 +42,17 @@ import java.util.Date;
 
 public class DirectMessageActivity extends AppCompatActivity {
 
+    public static final String MESSAGES = "messages";
+
     DirectMessageAdapter directMessageAdapter;
+
     private ArrayList<DirectMessage> messages;
 
     private SocketServer socketServer;
-    private ServerSocket serverSocket;
 
+    private ServerSocket serverSocket;
     private TextView textDevice;
+
     private TextView textServer;
     private EditText textName;
     private EditText textInput;
@@ -121,11 +129,12 @@ public class DirectMessageActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         try {
-            Toast.makeText(DirectMessageActivity.this, "Server Stopped!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DirectMessageActivity.this, "Server Stopped", Toast.LENGTH_SHORT).show();
             serverSocket.close();
             Log.d(DirectMessageActivity.class.getName(), "onDestroy: Server Socket closed");
         } catch (IOException e) {
@@ -140,17 +149,13 @@ public class DirectMessageActivity extends AppCompatActivity {
         textName = (EditText) findViewById(R.id.txtName);
         textInput = (EditText) findViewById(R.id.txtInput);
         textOutput = (ListView) findViewById(R.id.txtOutput);
+        messages = new ArrayList<>();
 
-        try {
-            serverSocket = new ServerSocket();
-            serverSocket.setReuseAddress(true);
-            serverSocket.bind(new InetSocketAddress(Integer.parseInt("4444")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        /*if (savedInstanceState != null) {
+            messages = (ArrayList<DirectMessage>) savedInstanceState.getSerializable(MESSAGES);
+        } */
 
-        messages = new ArrayList<DirectMessage>();
-        socketServer = new SocketServer(this, serverSocket);
+        createSocketServer();
 
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         String ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
@@ -165,6 +170,21 @@ public class DirectMessageActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+
+    public void createSocketServer() {
+        if (serverSocket == null) {
+            try {
+                serverSocket = new ServerSocket();
+                serverSocket.setReuseAddress(true);
+                serverSocket.bind(new InetSocketAddress(Integer.parseInt("4444")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            socketServer = new SocketServer(this, serverSocket);
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -177,5 +197,16 @@ public class DirectMessageActivity extends AppCompatActivity {
     public void send(View v) {
         SocketClient client = new SocketClient(this);
         client.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, textServer.getText().toString(), "4444", textInput.getText().toString());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putSerializable(MESSAGES, messages);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }

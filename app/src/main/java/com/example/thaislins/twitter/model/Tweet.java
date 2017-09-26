@@ -1,7 +1,12 @@
 package com.example.thaislins.twitter.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.Date;
+
+import static java.lang.System.in;
 
 /**
  * Created by thaislins on 30/08/17.
@@ -19,6 +24,12 @@ public class Tweet implements Serializable {
         this.tweet = tweet;
         date = new Date();
     }
+
+    /*public Tweet(Parcel in) {
+        user = in.readParcelable(User.class.getClassLoader());
+        tweet = in.readString();
+        date = (Date) in.readSerializable();
+    }*/
 
     public User getUser() {
         return user;
@@ -47,4 +58,5 @@ public class Tweet implements Serializable {
     public String toString() {
         return user + "\n" + tweet + "\n" + date.toString();
     }
+
 }

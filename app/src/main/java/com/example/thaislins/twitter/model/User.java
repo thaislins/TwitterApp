@@ -1,5 +1,8 @@
 package com.example.thaislins.twitter.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
@@ -20,9 +23,13 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
-    public void setUsername() { this.username = name; }
+    public void setUsername() {
+        this.username = name;
+    }
 
     public String getName() {
         return name;
@@ -47,4 +54,5 @@ public class User implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
 }

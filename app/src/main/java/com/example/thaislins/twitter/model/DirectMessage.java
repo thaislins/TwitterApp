@@ -1,5 +1,8 @@
 package com.example.thaislins.twitter.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -42,4 +45,5 @@ public class DirectMessage implements Serializable {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

@@ -11,42 +11,25 @@
         android:layout_height="wrap_content"
         android:text="TextView" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Server IP" />
-
     <EditText
         android:id="@+id/txtServerIP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Server IP"
         android:inputType="textMultiLine" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        tools:layout_editor_absoluteY="0dp" />
 
     <EditText
         android:id="@+id/txtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Name"
         android:inputType="textMultiLine" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Chat Socket"
-        tools:layout_editor_absoluteY="0dp" />
 
     <EditText
         android:id="@+id/txtInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Message"
         android:inputType="textMultiLine" />
 
     <Button

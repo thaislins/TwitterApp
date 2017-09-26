@@ -2,6 +2,8 @@ package com.example.thaislins.twitter.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ public class TwitterMainActivity extends AppCompatActivity {
     protected static final int EDIT = 1;
     protected static final int PHOTO = 2;
     private static final String IMAGE = "image";
+    private static final String TWEETS = "tweets";
 
     private ArrayList<Tweet> listOfTweets;
     private TweetAdapter listAdapter;
@@ -39,6 +42,11 @@ public class TwitterMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         run(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override
@@ -87,13 +95,9 @@ public class TwitterMainActivity extends AppCompatActivity {
     }
 
     public void run(Bundle savedInstanceState) {
-        listTwitter = (ListView) findViewById(R.id.listTweet);
-        listOfTweets = new ArrayList<Tweet>();
-        listAdapter = new TweetAdapter(this, listOfTweets);
-        listTwitter.setAdapter(listAdapter);
-        registerForContextMenu(listTwitter);
 
         if (savedInstanceState != null) {
+            listOfTweets = (ArrayList<Tweet>) savedInstanceState.getSerializable(TWEETS);
             bitmap = savedInstanceState.getParcelable(IMAGE);
 
             if (bitmap != null) {
@@ -101,7 +105,14 @@ public class TwitterMainActivity extends AppCompatActivity {
 
                 imgView.setImageBitmap(bitmap);
             }
+        } else {
+            listOfTweets = new ArrayList<Tweet>();
         }
+
+        listTwitter = (ListView) findViewById(R.id.listTweet);
+        listAdapter = new TweetAdapter(this, listOfTweets);
+        listTwitter.setAdapter(listAdapter);
+        registerForContextMenu(listTwitter);
 
         listTwitter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View view,
@@ -128,7 +139,7 @@ public class TwitterMainActivity extends AppCompatActivity {
     }
 
     public void sendDirect(View v) {
-        startActivity(new Intent(this,DirectMessageActivity.class));
+        startActivity(new Intent(this, DirectMessageActivity.class));
     }
 
     @Override
@@ -171,7 +182,7 @@ public class TwitterMainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(IMAGE, bitmap);
+        outState.putSerializable(TWEETS, listOfTweets);
         super.onSaveInstanceState(outState);
     }
-
 }
