@@ -6,15 +6,11 @@ import android.util.Log;
 
 import com.example.thaislins.twitter.activities.DirectMessageActivity;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Date;
-
-import static android.app.PendingIntent.getActivity;
 
 /**
  * Created by thaislins on 24/09/17.
@@ -32,11 +28,16 @@ public class SocketClient extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
         Socket socket = null;
         StringBuilder data = new StringBuilder();
+        String ipServer = strings[0];
+        String portNumber = strings[1];
+        String username = strings[2];
+        String message = strings[3];
 
         try {
-            socket = new Socket(strings[0], Integer.parseInt(strings[1]));
+            socket = new Socket(ipServer, Integer.parseInt(portNumber));
             PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
-            pw.println(strings[2]);
+            pw.println(username);
+            pw.println(message);
         } catch (Exception e) {
             Log.e("AsyncTask", "doInBackground: error on socket...", e);
         } finally {

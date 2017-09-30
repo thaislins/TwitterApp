@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.thaislins.twitter.R;
 import com.example.thaislins.twitter.model.DirectMessage;
-import com.example.thaislins.twitter.model.Tweet;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

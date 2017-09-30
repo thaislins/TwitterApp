@@ -2,7 +2,6 @@ package com.example.thaislins.twitter.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;

@@ -3,16 +3,12 @@ package com.example.thaislins.twitter.model;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.example.thaislins.twitter.activities.DirectMessageActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
@@ -37,21 +33,23 @@ public class SocketServer extends AsyncTask<Void, String, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         boolean listening = true;
+        String username;
         String message;
-        String name;
 
         try {
             while (listening) {
                 Socket socket = serverSocket.accept();
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+                username = in.readLine();
                 while ((message = in.readLine()) != null) {
-                    // If message is "stop_server" then stop server
+
                     if ("stop_server".equals(message)) {
                         listening = false;
                         break;
                     }
 
-                    publishProgress(message);
+                    publishProgress(username, message);
                 }
 
                 in.close();
@@ -67,8 +65,8 @@ public class SocketServer extends AsyncTask<Void, String, Void> {
     @Override
     protected void onProgressUpdate(String... data) {
         super.onProgressUpdate(data);
-        User receiver = new User("@username", "User", "user@email.com", "+1 555 555 5555");
-        DirectMessage directMessage = new DirectMessage(new Date(), receiver, data[0]);
+        User receiver = new User(data[0], "User", "user@email.com", "+1 555 555 5555");
+        DirectMessage directMessage = new DirectMessage(new Date(), receiver, data[1]);
         ((DirectMessageActivity) context).getMessages().add(directMessage);
         ((DirectMessageActivity) context).getDirectMessageAdapter().notifyDataSetChanged();
     }

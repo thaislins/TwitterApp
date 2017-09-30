@@ -3,8 +3,6 @@ package com.example.thaislins.twitter.activities;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Message;
-import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Formatter;
@@ -21,20 +19,11 @@ import com.example.thaislins.twitter.adapter.DirectMessageAdapter;
 import com.example.thaislins.twitter.model.DirectMessage;
 import com.example.thaislins.twitter.model.SocketClient;
 import com.example.thaislins.twitter.model.SocketServer;
-import com.example.thaislins.twitter.model.User;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by thaislins on 23/09/17.
@@ -151,10 +140,6 @@ public class DirectMessageActivity extends AppCompatActivity {
         textOutput = (ListView) findViewById(R.id.txtOutput);
         messages = new ArrayList<>();
 
-        /*if (savedInstanceState != null) {
-            messages = (ArrayList<DirectMessage>) savedInstanceState.getSerializable(MESSAGES);
-        } */
-
         createSocketServer();
 
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
@@ -195,8 +180,12 @@ public class DirectMessageActivity extends AppCompatActivity {
     }
 
     public void send(View v) {
+        String ipServer = textServer.getText().toString();
+        String username = textName.getText().toString();
+        String message = textInput.getText().toString();
+
         SocketClient client = new SocketClient(this);
-        client.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, textServer.getText().toString(), "4444", textInput.getText().toString());
+        client.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ipServer, "4444", username, message);
     }
 
     @Override
